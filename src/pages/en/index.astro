@@ -1,0 +1,49 @@
+---
+/**
+ * English Home Page
+ * SAS Huqooqi for Legal Training Center
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import AboutSection from '../../components/AboutSection.astro';
+import VisionMission from '../../components/VisionMission.astro';
+import CoreActivities from '../../components/CoreActivities.astro';
+import Values from '../../components/Values.astro';
+import CTA from '../../components/CTA.astro';
+import { useTranslations } from '../../i18n';
+import { client } from '../../data/client';
+
+const t = useTranslations('en');
+---
+
+<BaseLayout
+  title={t.meta.homeTitle}
+  description={t.meta.homeDescription}
+  lang="en"
+  schema={{
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: client.name,
+    email: client.email,
+    telephone: client.phoneForTel,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: client.address.city,
+      addressCountry: client.address.country,
+    },
+    url: client.domain,
+  }}
+>
+  <Header slot="header" />
+
+  <HeroSection />
+  <AboutSection />
+  <VisionMission />
+  <CoreActivities />
+  <Values />
+  <CTA />
+
+  <Footer slot="footer" />
+</BaseLayout>

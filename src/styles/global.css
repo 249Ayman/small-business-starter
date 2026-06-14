@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./theme.css";
+@import "./animations.css";
 @plugin "@tailwindcss/typography";
 
 @layer base {
@@ -13,10 +14,56 @@
     transition: background-color 0.3s;
   }
 
+  /* RTL — modest Cairo adjustment only (not a full scale-up) */
+  html[dir="rtl"] {
+    font-size: 100%;
+    --text-topper:  clamp(0.8125rem, 1.4vw, 0.9375rem);
+    --text-body:    1rem;
+    --text-lead:    clamp(1.0625rem, 1.8vw, 1.25rem);
+    --text-h3:      clamp(1.25rem, 2.2vw, 1.5rem);
+    --text-h2:      clamp(1.75rem, 3vw, 2.25rem);
+    --text-h1:      clamp(2.25rem, 5vw, 3.5rem);
+    --text-display: clamp(2.75rem, 6vw, 4.5rem);
+  }
+
+  html[dir="rtl"] body {
+    font-family: var(--font-arabic);
+    line-height: 1.7;
+  }
+
+  html[dir="rtl"] p,
+  html[dir="rtl"] li {
+    line-height: 1.75;
+  }
+
+  /* Uppercase / tight tracking don't suit Arabic */
+  html[dir="rtl"] .uppercase {
+    text-transform: none;
+  }
+
+  html[dir="rtl"] .tracking-tight,
+  html[dir="rtl"] .tracking-wide,
+  html[dir="rtl"] .tracking-widest,
+  html[dir="rtl"] .tracking-\[0\.2em\] {
+    letter-spacing: normal;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     line-height: 1.2;
     color: var(--color-text);
+  }
+
+  /* RTL headings use Arabic font */
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] h4,
+  html[dir="rtl"] h5,
+  html[dir="rtl"] h6 {
+    font-family: var(--font-arabic);
+    line-height: 1.4;
+    letter-spacing: normal;
   }
 
   .dark body,
@@ -40,3 +87,4 @@
     }
   }
 }
+

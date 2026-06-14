@@ -1,33 +1,33 @@
 /*
  * ─────────────────────────────────────────────────────────────────────────────
- * THEME — edit src/config/brand.ts to change values, not this file.
+ * THEME — SAS Huqooqi Legal Center
+ * Gold/Brown theme based on organization logo
  *
  * The @theme block registers Tailwind v4 design tokens as CSS custom
  * properties. After changing brand.ts, update the hex codes below to match.
  *
  * Fonts are injected by Astro 6's built-in font optimizer (astro.config.mjs).
- * The --font-body and --font-display variables are available here automatically.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 @theme {
-  /* ── Brand Colors ───────────────────────────────────────────────── */
-  --color-primary:       #1B3A6B;
-  --color-primary-light: #2563EB;
+  /* ── Brand Colors (Gold/Brown) ──────────────────────────────────── */
+  --color-primary:       #8B6914;
+  --color-primary-light: #A67C00;
   --color-primary-fg:    #ffffff;
-  --color-accent:        #F97316;
+  --color-accent:        #5C4A0E;
   --color-accent-fg:     #ffffff;
 
-  /* ── Neutral Scale ──────────────────────────────────────────────── */
-  --color-background:    #ffffff;
-  --color-surface:       #F8FAFC;
-  --color-border:        #E2E8F0;
-  --color-text:          #0F172A;
-  --color-text-muted:    #475569;
+  /* ── Neutral Scale (Warm tones) ─────────────────────────────────── */
+  --color-background:    #FFFDF8;
+  --color-surface:       #FBF7EF;
+  --color-border:        #E8DFC8;
+  --color-text:          #1F1A0F;
+  --color-text-muted:    #6B5D45;
 
   /* ── Dark Mode ──────────────────────────────────────────────────── */
-  --color-dark:          #0F172A;
-  --color-dark-surface:  #1E293B;
+  --color-dark:          #1F1A0F;
+  --color-dark-surface:  #2D2618;
 
   /* ── Border Radius ──────────────────────────────────────────────── */
   --radius-sm:   0.375rem;
@@ -51,10 +51,11 @@
 
 /*
  * ── Font wiring ─────────────────────────────────────────────────────────────
- * Astro injects --font-body and --font-display at runtime via the Fonts API.
+ * Astro injects font variables at runtime via the Fonts API.
  * @theme inline emits var() references without trying to resolve at build time.
  */
 @theme inline {
-  --font-heading: var(--font-display), 'Oswald', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-display), 'Playfair Display', ui-serif, Georgia, serif;
   --font-body:    var(--font-body), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-arabic:  var(--font-arabic), 'Cairo', ui-sans-serif, system-ui, sans-serif;
 }

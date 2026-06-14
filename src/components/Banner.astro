@@ -1,35 +1,48 @@
 ---
+/**
+ * Banner/Page Header with i18n support
+ */
+import { getLangFromUrl, useTranslations } from '../i18n';
+import AnimateOnScroll from './AnimateOnScroll.astro';
+
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const isRTL = lang === 'ar';
 
 const segments = Astro.url.pathname
   .split('/')
   .filter(Boolean)
+  .slice(1)
   .map((seg, i, arr) => ({
     label: seg.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-    href: '/' + arr.slice(0, i + 1).join('/'),
+    href: '/' + lang + '/' + arr.slice(0, i + 1).join('/'),
     isLast: i === arr.length - 1,
   }));
 ---
 
 <section class="bg-primary py-14 sm:py-16 lg:py-20">
-  <div class="mx-auto max-w-site px-4 sm:px-6">
+  <AnimateOnScroll animation="fade-in" class="mx-auto max-w-site px-4 sm:px-6">
     <!-- Breadcrumb -->
     <nav aria-label="Breadcrumb" class="mb-4">
-      <ol class="flex flex-wrap items-center gap-1.5 text-sm text-primary-fg/60">
+      <ol class:list={[
+        'flex flex-wrap items-center gap-1.5 text-sm text-primary-fg/60',
+        isRTL && 'flex-row-reverse'
+      ]}>
         <li>
-          <a href="/" class="transition-colors hover:text-primary-fg">Home</a>
+          <a href={`/${lang}/`} class="transition-colors hover:text-primary-fg">{t.nav.home}</a>
         </li>
         {segments.map(({ label, href, isLast }) => (
-          <li class="flex items-center gap-1.5">
-            <svg class="size-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <li class:list={['flex items-center gap-1.5', isRTL && 'flex-row-reverse']}>
+            <svg class:list={['size-3.5', isRTL && 'rotate-180']} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
             {isLast ? (
-              <span aria-current="page" class="text-primary-fg">{label}</span>
+              <span aria-current="page" class="text-primary-fg">{title}</span>
             ) : (
               <a href={href} class="transition-colors hover:text-primary-fg">{label}</a>
             )}
@@ -38,8 +51,11 @@ const segments = Astro.url.pathname
       </ol>
     </nav>
 
-    <h1 class="font-heading text-h1 font-bold uppercase text-primary-fg">
+    <h1 class:list={[
+      'text-h1 font-bold text-primary-fg',
+      isRTL ? 'font-arabic text-right' : 'font-heading'
+    ]}>
       {title}
     </h1>
-  </div>
+  </AnimateOnScroll>
 </section>

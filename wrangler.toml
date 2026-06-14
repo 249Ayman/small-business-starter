@@ -1,0 +1,29 @@
+# Cloudflare Pages Configuration
+# https://developers.cloudflare.com/pages/configuration/wrangler-configuration/
+
+name = "sas-huqooqi"
+compatibility_date = "2024-01-01"
+
+# Pages-specific configuration
+pages_build_output_dir = "dist"
+
+# Build configuration (optional - can also be set in Cloudflare dashboard)
+# [build]
+# command = "pnpm run build"
+
+# Environment variables for production
+# [vars]
+# Set these in the Cloudflare Pages dashboard for security
+
+# Custom headers (alternative to _headers file)
+# [[headers]]
+# for = "/*"
+#   [headers.values]
+#   X-Frame-Options = "DENY"
+#   X-Content-Type-Options = "nosniff"
+
+# Redirects (alternative to _redirects file)
+# [[redirects]]
+# from = "/"
+# to = "/en/"
+# status = 302

@@ -1,6 +1,7 @@
 ---
 /**
  * Base layout — wraps every page.
+ * Supports bilingual English/Arabic with RTL.
  *
  * Astro 6 features used:
  *  • <Font />         — built-in font optimizer from astro.config.mjs fonts array
@@ -11,32 +12,46 @@ import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import { brand } from '../config/brand';
 import { client } from '../data/client';
+import { getLangFromUrl, getLanguageConfig, getAlternateUrl, type LanguageCode } from '../i18n';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
   schema?: Record<string, unknown>;
+  lang?: LanguageCode;
 }
 
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url);
+const langConfig = getLanguageConfig(lang);
+const isRTL = langConfig.dir === 'rtl';
+
 const {
-  title = brand.name,
-  description = brand.description,
+  title = lang === 'ar' ? brand.nameAr : brand.name,
+  description = lang === 'ar' ? brand.descriptionAr : brand.description,
   image = '/og-image.png',
   schema,
 } = Astro.props;
 
-const pageTitle = title === brand.name ? title : `${title} — ${brand.name}`;
+const siteName = lang === 'ar' ? brand.nameAr : brand.name;
+const pageTitle = title === siteName ? title : `${title} — ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
+
+const alternateEn = new URL(getAlternateUrl(Astro.url, 'en'), Astro.site ?? brand.url);
+const alternateAr = new URL(getAlternateUrl(Astro.url, 'ar'), Astro.site ?? brand.url);
 ---
 
-<html lang={brand.locale.split('_')[0]} class="scroll-smooth">
+<html lang={langConfig.code} dir={langConfig.dir} class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="en" href={alternateEn} />
+    <link rel="alternate" hreflang="ar" href={alternateAr} />
+    <link rel="alternate" hreflang="x-default" href={alternateEn} />
+    
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
@@ -46,7 +61,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
     <meta property="og:title"       content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image"       content={image} />
-    <meta property="og:locale"      content={brand.locale} />
+    <meta property="og:locale"      content={langConfig.locale} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
@@ -61,6 +76,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
     <!-- Fonts -->
     <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-body"    preload />
+    <Font cssVariable="--font-arabic"  preload />
 
     <!-- JSON-LD Structured Data -->
     {schema && (
@@ -81,12 +97,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
     <ClientRouter />
   </head>
 
-  <body class="bg-background text-text font-body antialiased">
+  <body class:list={[
+    'bg-background text-text antialiased',
+    isRTL ? 'font-arabic' : 'font-body'
+  ]}>
     <a
       class="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:bg-primary focus:text-primary-fg focus:px-4 focus:py-2 focus:rounded-md"
       href="#main"
     >
-      Skip to main content
+      {isRTL ? 'تخطي إلى المحتوى الرئيسي' : 'Skip to main content'}
     </a>
 
     <slot name="header" />
@@ -96,5 +115,37 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
     </main>
 
     <slot name="footer" />
+
+    <script>
+      function initScrollAnimations() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const elements = document.querySelectorAll('[data-animate]:not(.is-visible)');
+
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          elements.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: '0px 0px -8% 0px',
+          }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+      }
+
+      initScrollAnimations();
+      document.addEventListener('astro:after-swap', initScrollAnimations);
+    </script>
   </body>
 </html>

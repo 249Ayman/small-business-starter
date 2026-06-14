@@ -1,0 +1,41 @@
+---
+/**
+ * Target Groups Section
+ * Displays who the organization serves
+ */
+import { getLangFromUrl, useTranslations } from '../i18n';
+import AnimateOnScroll from './AnimateOnScroll.astro';
+
+interface Props {
+  class?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const isRTL = lang === 'ar';
+---
+
+<section class:list={['bg-surface py-section', Astro.props.class]}>
+  <div class="mx-auto max-w-site px-4 sm:px-6">
+    <AnimateOnScroll animation="fade-up" class="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+      <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.targetGroups.topper}</span>
+      <h2 class:list={[
+        'mt-2 text-h2 font-bold uppercase text-text',
+        isRTL ? 'font-arabic' : 'font-heading'
+      ]}>
+        {t.targetGroups.heading}
+      </h2>
+    </AnimateOnScroll>
+
+    <AnimateOnScroll stagger class="flex flex-wrap justify-center gap-3 sm:gap-4">
+      {t.targetGroups.items.map((group) => (
+        <div class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-text shadow-sm sm:px-5 sm:py-2.5 sm:text-base">
+          <svg class="size-4 text-primary sm:size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>{group}</span>
+        </div>
+      ))}
+    </AnimateOnScroll>
+  </div>
+</section>

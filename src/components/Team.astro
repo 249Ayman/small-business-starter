@@ -1,0 +1,126 @@
+---
+/**
+ * Team Section
+ * Displays founders and board of directors
+ */
+import { Image } from 'astro:assets';
+import { getLangFromUrl, useTranslations } from '../i18n';
+import { teamImage } from '../config/images';
+import AnimateOnScroll from './AnimateOnScroll.astro';
+
+interface Props {
+  showFoundersOnly?: boolean;
+  showBoardOnly?: boolean;
+  class?: string;
+}
+
+const { showFoundersOnly = false, showBoardOnly = false } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const isRTL = lang === 'ar';
+
+const showFounders = !showBoardOnly;
+const showBoard = !showFoundersOnly;
+---
+
+<section class:list={['py-section', Astro.props.class]}>
+  <div class="mx-auto max-w-site px-4 sm:px-6">
+    
+    {!showFoundersOnly && !showBoardOnly && (
+      <AnimateOnScroll animation="fade-up" class="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+        <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.team.topper}</span>
+        <h2 class:list={[
+          'mt-2 text-h2 font-bold uppercase text-text',
+          isRTL ? 'font-arabic' : 'font-heading'
+        ]}>
+          {t.team.heading}
+        </h2>
+      </AnimateOnScroll>
+    )}
+
+    {showFounders && !showBoardOnly && (
+      <AnimateOnScroll animation="fade-in" class="mx-auto mb-14 max-w-4xl overflow-hidden rounded-xl shadow-xl">
+        <Image
+          src={teamImage}
+          alt={isRTL ? 'فريق مركز ساس الحقوقي' : 'SAS Huqooqi leadership team'}
+          width={1200}
+          height={900}
+          loading="lazy"
+          class="aspect-4/3 w-full object-cover"
+        />
+      </AnimateOnScroll>
+    )}
+
+    {showFounders && (
+      <div class:list={[showBoard && 'mb-16']}>
+        <AnimateOnScroll animation="fade-up" class="mb-8 text-center">
+          <h3 class:list={[
+            'text-h3 font-semibold text-text',
+            isRTL ? 'font-arabic' : 'font-heading'
+          ]}>
+            {t.team.foundersTitle}
+          </h3>
+        </AnimateOnScroll>
+        <AnimateOnScroll stagger class="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {t.team.founders.map((person) => (
+            <div class="text-center">
+              <div class="mx-auto mb-4 flex size-24 items-center justify-center rounded-full bg-primary/10 text-primary sm:size-28">
+                <svg class="size-12 sm:size-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h4 class:list={[
+                'text-lg font-semibold text-text',
+                isRTL ? 'font-arabic' : 'font-heading'
+              ]}>
+                {isRTL ? person.nameAr : person.name}
+              </h4>
+              {!isRTL && person.nameAr && (
+                <p class="mt-0.5 text-sm text-text-muted font-arabic" dir="rtl">{person.nameAr}</p>
+              )}
+              {isRTL && person.name && (
+                <p class="mt-0.5 text-sm text-text-muted" dir="ltr">{person.name}</p>
+              )}
+              <p class="mt-1 text-sm font-medium text-primary">{person.role}</p>
+            </div>
+          ))}
+        </AnimateOnScroll>
+      </div>
+    )}
+
+    {showBoard && (
+      <div class="bg-surface rounded-lg p-6 sm:p-10">
+        <AnimateOnScroll animation="fade-up" class="mb-8 text-center">
+          <h3 class:list={[
+            'text-h3 font-semibold text-text',
+            isRTL ? 'font-arabic' : 'font-heading'
+          ]}>
+            {t.team.boardTitle}
+          </h3>
+        </AnimateOnScroll>
+        <AnimateOnScroll stagger class="mx-auto grid max-w-5xl grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+          {t.team.board.map((person) => (
+            <div class="text-center">
+              <div class="mx-auto mb-3 flex size-16 items-center justify-center rounded-full bg-accent/10 text-accent sm:size-20">
+                <svg class="size-8 sm:size-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h4 class:list={[
+                'text-sm font-semibold text-text sm:text-base',
+                isRTL ? 'font-arabic' : 'font-heading'
+              ]}>
+                {isRTL ? person.nameAr : person.name}
+              </h4>
+              {!isRTL && person.nameAr && (
+                <p class="mt-0.5 text-xs text-text-muted font-arabic" dir="rtl">{person.nameAr}</p>
+              )}
+            </div>
+          ))}
+        </AnimateOnScroll>
+      </div>
+    )}
+
+  </div>
+</section>

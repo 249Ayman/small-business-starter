@@ -1,0 +1,85 @@
+---
+/**
+ * Core Activities Section
+ * Displays the organization's main areas of work
+ */
+import { getLangFromUrl, useTranslations } from '../i18n';
+import AnimateOnScroll from './AnimateOnScroll.astro';
+
+interface Props {
+  showAll?: boolean;
+  class?: string;
+}
+
+const { showAll = false } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const isRTL = lang === 'ar';
+
+const icons = [
+  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />',
+  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />',
+  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />',
+  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />',
+  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />',
+  '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />',
+];
+
+const displayItems = showAll ? t.activities.items : t.activities.items.slice(0, 6);
+---
+
+<section class:list={['bg-surface py-section', Astro.props.class]}>
+  <div class="mx-auto max-w-site px-4 sm:px-6">
+    <AnimateOnScroll animation="fade-up" class="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+      <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.activities.topper}</span>
+      <h2 class:list={[
+        'mt-2 text-h2 font-bold uppercase text-text',
+        isRTL ? 'font-arabic' : 'font-heading'
+      ]}>
+        {t.activities.heading}
+      </h2>
+      <p class="mt-3 text-text-muted leading-relaxed">{t.activities.description}</p>
+    </AnimateOnScroll>
+
+    <AnimateOnScroll
+      tag="ul"
+      stagger
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      role="list"
+    >
+      {displayItems.map((activity, i) => (
+        <li>
+          <div
+            class="group flex h-full flex-col rounded-lg border border-border bg-background p-6 shadow-sm transition-shadow duration-200 hover:shadow-md"
+          >
+            <div class="mb-4 flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-fg">
+              <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[i % icons.length]} />
+            </div>
+            <h3 class:list={[
+              'text-h3 font-semibold text-text',
+              isRTL ? 'font-arabic' : 'font-heading'
+            ]}>
+              {activity.title}
+            </h3>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{activity.description}</p>
+          </div>
+        </li>
+      ))}
+    </AnimateOnScroll>
+
+    {!showAll && (
+      <AnimateOnScroll animation="fade-in" class="mt-10 text-center">
+        <a
+          href={`/${lang}/activities`}
+          class="inline-flex min-h-[44px] items-center gap-2 rounded-md border-2 border-primary px-6 py-3 text-base font-bold text-primary transition-colors hover:bg-primary hover:text-primary-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          {t.activities.cta}
+          <svg class:list={['size-4', isRTL && 'rotate-180']} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </AnimateOnScroll>
+    )}
+  </div>
+</section>

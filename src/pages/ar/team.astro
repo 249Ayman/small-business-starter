@@ -1,0 +1,31 @@
+---
+/**
+ * Arabic Team Page
+ * المؤسسات ومجلس الإدارة
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Banner from '../../components/Banner.astro';
+import Team from '../../components/Team.astro';
+import CTA from '../../components/CTA.astro';
+import { useTranslations } from '../../i18n';
+
+const t = useTranslations('ar');
+---
+
+<BaseLayout
+  title={t.meta.teamTitle}
+  description={t.meta.teamDescription}
+  lang="ar"
+>
+  <Header slot="header" />
+
+  <Banner title={t.nav.team} />
+
+  <Team />
+
+  <CTA />
+
+  <Footer slot="footer" />
+</BaseLayout>

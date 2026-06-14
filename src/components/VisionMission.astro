@@ -1,0 +1,65 @@
+---
+/**
+ * Vision & Mission Section
+ * Displays organization's vision and mission side by side
+ */
+import { getLangFromUrl, useTranslations } from '../i18n';
+import AnimateOnScroll from './AnimateOnScroll.astro';
+
+interface Props {
+  class?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const isRTL = lang === 'ar';
+---
+
+<section class:list={['py-section', Astro.props.class]}>
+  <div class="mx-auto max-w-site px-4 sm:px-6">
+    <AnimateOnScroll stagger>
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+      
+      <!-- Vision -->
+      <div class="rounded-lg border border-border bg-surface p-8 lg:p-10">
+        <div class="mb-6 flex size-14 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <svg class="size-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </div>
+        <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.vision.topper}</span>
+        <h2 class:list={[
+          'mt-2 text-h2 font-bold text-text',
+          isRTL ? 'font-arabic' : 'font-heading'
+        ]}>
+          {t.vision.heading}
+        </h2>
+        <p class="mt-4 text-text-muted leading-relaxed">
+          {t.vision.text}
+        </p>
+      </div>
+
+      <!-- Mission -->
+      <div class="rounded-lg border border-border bg-surface p-8 lg:p-10">
+        <div class="mb-6 flex size-14 items-center justify-center rounded-lg bg-accent/10 text-accent">
+          <svg class="size-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <span class="text-topper font-bold uppercase tracking-widest text-accent">{t.mission.topper}</span>
+        <h2 class:list={[
+          'mt-2 text-h2 font-bold text-text',
+          isRTL ? 'font-arabic' : 'font-heading'
+        ]}>
+          {t.mission.heading}
+        </h2>
+        <p class="mt-4 text-text-muted leading-relaxed">
+          {t.mission.text}
+        </p>
+      </div>
+
+      </div>
+    </AnimateOnScroll>
+  </div>
+</section>

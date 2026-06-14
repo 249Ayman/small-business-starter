@@ -1,0 +1,211 @@
+---
+/**
+ * Hero Section — brand-aligned legal training center landing
+ */
+import { getLangFromUrl, useTranslations } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const isRTL = lang === 'ar';
+---
+
+<section
+  class="hero-section relative overflow-hidden bg-background"
+  aria-label={t.hero.heading}
+>
+  <!-- Warm brand backdrop -->
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute inset-0 bg-linear-to-br from-surface via-background to-[#f5edd8]/40"></div>
+    <div class="absolute -top-32 right-0 size-[480px] rounded-full bg-primary/8 blur-3xl"></div>
+    <div class="absolute -bottom-40 left-0 size-[400px] rounded-full bg-primary-light/10 blur-3xl"></div>
+
+    <!-- Scales of justice watermark (legal motif, not decorative star) -->
+    <svg
+      class:list={[
+        'absolute text-primary/[0.04]',
+        isRTL ? '-left-16 top-1/2 size-[min(70vw,420px)] -translate-y-1/2' : '-right-16 top-1/2 size-[min(70vw,420px)] -translate-y-1/2',
+      ]}
+      viewBox="0 0 200 240"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <line x1="100" y1="28" x2="100" y2="108" />
+      <line x1="52" y1="48" x2="148" y2="48" />
+      <line x1="52" y1="48" x2="32" y2="88" />
+      <line x1="148" y1="48" x2="168" y2="88" />
+      <path d="M32 88 C32 108 48 118 52 118 C56 118 72 108 72 88 Z" />
+      <path d="M168 88 C168 108 152 118 148 118 C144 118 128 108 128 88 Z" />
+      <rect x="72" y="108" width="56" height="10" rx="2" />
+      <path d="M78 118 L78 200 L122 200 L122 118" />
+      <line x1="68" y1="200" x2="132" y2="200" />
+    </svg>
+  </div>
+
+  <!-- Gold accent rule -->
+  <div class="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-transparent via-primary to-transparent" aria-hidden="true"></div>
+
+  <div class="relative mx-auto max-w-site px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+    <div class:list={[
+      'grid items-center gap-12 lg:grid-cols-2 lg:gap-16',
+      isRTL && 'lg:[direction:rtl]'
+    ]}>
+
+      <!-- Copy -->
+      <div class:list={[
+        'space-y-6 text-center lg:space-y-7',
+        isRTL ? 'lg:text-right font-arabic' : 'lg:text-left',
+        isRTL ? 'lg:[direction:rtl]' : '',
+      ]}>
+
+        <p
+          class="hero-fade-in inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-topper font-semibold text-primary"
+          style="animation-delay: 0ms"
+        >
+          <span class="size-2 rounded-full bg-primary-light" aria-hidden="true"></span>
+          {t.hero.topper}
+        </p>
+
+        <div class="hero-fade-in space-y-2" style="animation-delay: 100ms">
+          <h1
+            class:list={[
+              'font-bold leading-[1.1] text-text',
+              isRTL
+                ? 'font-arabic text-[clamp(2rem,6vw,3.5rem)]'
+                : 'font-heading text-[clamp(2.5rem,6.5vw,4.25rem)]',
+            ]}
+            transition:name="hero-heading"
+          >
+            <span class="block text-primary">{t.hero.headingPrimary}</span>
+            <span class="block text-text">{t.hero.headingSecondary}</span>
+          </h1>
+          <p class:list={[
+            'font-medium text-primary-light',
+            isRTL ? 'text-base' : 'font-heading text-base sm:text-lg',
+          ]}>
+            {t.hero.subheading}
+          </p>
+        </div>
+
+        <!-- Pill tags -->
+        <div
+          class:list={[
+            'hero-fade-in flex flex-wrap justify-center gap-2 lg:justify-start',
+            isRTL && 'lg:justify-end',
+          ]}
+          style="animation-delay: 250ms"
+        >
+          {t.hero.highlight.map((item) => (
+            <span class="rounded-full border border-border bg-surface px-4 py-1.5 text-sm font-medium text-text sm:text-base">
+              {item}
+            </span>
+          ))}
+        </div>
+
+        <p
+          class="hero-fade-in mx-auto max-w-xl text-lead leading-relaxed text-text-muted lg:mx-0"
+          style="animation-delay: 400ms"
+        >
+          {t.hero.description}
+        </p>
+
+        <!-- CTAs -->
+        <div
+          class:list={[
+            'hero-fade-in flex flex-col items-center gap-3 sm:flex-row sm:gap-4',
+            isRTL ? 'lg:justify-end sm:flex-row-reverse' : 'lg:justify-start',
+          ]}
+          style="animation-delay: 550ms"
+        >
+          <a
+            href={`/${lang}/contact`}
+            class="group inline-flex min-h-[48px] w-full min-w-[180px] items-center justify-center gap-2 rounded-md bg-primary px-7 py-3 text-base font-bold text-primary-fg shadow-md transition-all hover:bg-primary-light hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+          >
+            {t.hero.cta}
+            <svg class:list={['size-4 transition-transform group-hover:translate-x-0.5', isRTL && 'rotate-180 group-hover:-translate-x-0.5']} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a
+            href={`/${lang}/activities`}
+            class="inline-flex min-h-[48px] w-full min-w-[180px] items-center justify-center rounded-md border-2 border-primary/30 bg-background px-7 py-3 text-base font-bold text-primary transition-colors hover:border-primary hover:bg-surface sm:w-auto"
+          >
+            {t.hero.secondary}
+          </a>
+        </div>
+
+        <!-- Trust markers -->
+        <div
+          class:list={[
+            'hero-fade-in grid grid-cols-3 gap-4 border-t border-border pt-6',
+            isRTL && 'text-right',
+          ]}
+          style="animation-delay: 700ms"
+        >
+          {t.hero.stats.map((stat) => (
+            <div>
+              <p class:list={[
+                'text-xl font-bold text-primary sm:text-2xl',
+                isRTL ? 'font-arabic' : 'font-heading',
+              ]}>
+                {stat.value}
+              </p>
+              <p class="mt-0.5 text-xs text-text-muted sm:text-sm">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Brand mark -->
+      <div
+        class="hero-fade-in flex justify-center lg:justify-end"
+        style="animation-delay: 200ms"
+      >
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-2xl bg-primary/5" aria-hidden="true"></div>
+          <div class="relative rounded-2xl border border-primary/15 bg-background p-8 shadow-lg sm:p-10">
+            <img
+              src="/logo.png"
+              alt={t.hero.heading}
+              width={400}
+              height={160}
+              class="mx-auto h-auto w-full max-w-[min(100%,320px)] sm:max-w-[380px]"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes heroFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-fade-in {
+    opacity: 0;
+    animation: heroFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-fade-in {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+</style>

@@ -1,38 +1,40 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * CLIENT DATA
+ * CLIENT DATA - SAS Huqooqi for Legal Training Center
  * ─────────────────────────────────────────────────────────────────────────────
- * Business-specific copy: name, phone, email, address, socials.
+ * Organization-specific data: name, contact info, address, socials.
  * Imported by Header, Footer, Contact page, and Head/SEO components.
  *
- * No component should hardcode a business name or phone number —
+ * No component should hardcode organization name or contact info —
  * everything comes from this file or brand.ts.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 export const client = {
-  name: 'Small Business Starter',
-  email: 'hello@example.com',
-  phoneForTel: '555-867-5309',
-  phoneFormatted: '(555) 867-5309',
-  /** Business / contractor license number. Displayed in the header and footer
-   *  as a trust signal. Set to an empty string to hide it. */
-  license: 'Lic# 123456',
+  name: 'SAS Huqooqi for Legal Training Center',
+  nameAr: 'مركز ساس الحقوقي للتدريب القانوني',
+  email: 'saslawyers85@gmail.com',
+  whatsapp: '+249122798539',
+  whatsappLink: 'https://wa.me/249122798539',
+  phoneForTel: '+249122798539',
+  phoneFormatted: '+249 122 798 539',
+  /** Registration info. Set to an empty string to hide it. */
+  license: 'Registered 2021',
+  licenseAr: 'مسجل 2021',
   address: {
-    lineOne: '123 Main Street',
-    lineTwo: 'Suite 100',
-    city: 'Denver',
-    state: 'CO',
-    zip: '80206',
-    country: 'US',
-    mapLink: 'https://maps.app.goo.gl/example',
+    city: 'Khartoum',
+    cityAr: 'الخرطوم',
+    country: 'Sudan',
+    countryAr: 'السودان',
   },
   socials: {
-    facebook: 'https://www.facebook.com/',
-    instagram: 'https://www.instagram.com/',
-    google: 'https://www.google.com/maps',
+    whatsapp: 'https://wa.me/249122798539',
   },
-  domain: 'https://www.example.com',
+  domain: 'https://sashuqooqi.org',
+  
+  // Organization founding info
+  founded: '2021',
+  conceptualized: '2018',
 } as const;
 
 export type Client = typeof client;

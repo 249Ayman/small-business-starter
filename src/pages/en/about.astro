@@ -1,0 +1,88 @@
+---
+/**
+ * English About Page
+ * Organization story, vision, mission, and approach
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Banner from '../../components/Banner.astro';
+import VisionMission from '../../components/VisionMission.astro';
+import CTA from '../../components/CTA.astro';
+import { Image } from 'astro:assets';
+import { useTranslations } from '../../i18n';
+import { teamImage } from '../../config/images';
+import AnimateOnScroll from '../../components/AnimateOnScroll.astro';
+
+const t = useTranslations('en');
+---
+
+<BaseLayout
+  title={t.meta.aboutTitle}
+  description={t.meta.aboutDescription}
+  lang="en"
+>
+  <Header slot="header" />
+
+  <Banner title={t.nav.about} />
+
+  <!-- Story Section -->
+  <section class="py-section">
+    <AnimateOnScroll stagger class="mx-auto grid max-w-site grid-cols-1 items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
+      <div class="overflow-hidden rounded-lg shadow-lg">
+        <Image
+          src={teamImage}
+          alt="SAS Huqooqi leadership team"
+          width={800}
+          height={600}
+          loading="lazy"
+          class="size-full object-cover"
+        />
+      </div>
+      <div class="space-y-5">
+        <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.about.topper}</span>
+        <h2 class="font-heading text-h2 font-bold text-text">{t.about.heading}</h2>
+        {t.about.story.map((paragraph) => (
+          <p class="text-text-muted leading-relaxed">{paragraph}</p>
+        ))}
+      </div>
+    </AnimateOnScroll>
+  </section>
+
+  <VisionMission />
+
+  <!-- Institutional Approach -->
+  <section class="bg-surface py-section">
+    <AnimateOnScroll animation="fade-up" class="mx-auto max-w-site px-4 sm:px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.approach.topper}</span>
+        <h2 class="mt-2 font-heading text-h2 font-bold text-text">{t.approach.heading}</h2>
+        <p class="mt-6 text-text-muted leading-relaxed">{t.approach.text}</p>
+      </div>
+    </AnimateOnScroll>
+  </section>
+
+  <!-- Strategic Objectives -->
+  <section class="py-section">
+    <div class="mx-auto max-w-site px-4 sm:px-6">
+      <AnimateOnScroll animation="fade-up" class="mx-auto mb-10 max-w-2xl text-center">
+        <span class="text-topper font-bold uppercase tracking-widest text-primary">{t.objectives.topper}</span>
+        <h2 class="mt-2 font-heading text-h2 font-bold text-text">{t.objectives.heading}</h2>
+      </AnimateOnScroll>
+      <AnimateOnScroll tag="ul" stagger class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
+          {t.objectives.items.map((item) => (
+            <li class="flex items-start gap-3 rounded-lg border border-border bg-background p-4">
+              <svg class="mt-0.5 size-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="text-text">{item}</span>
+            </li>
+          ))}
+      </AnimateOnScroll>
+    </div>
+  </section>
+
+  <CTA />
+
+  <Footer slot="footer" />
+</BaseLayout>

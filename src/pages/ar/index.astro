@@ -1,0 +1,49 @@
+---
+/**
+ * Arabic Home Page
+ * مركز ساس الحقوقي للتدريب القانوني
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import AboutSection from '../../components/AboutSection.astro';
+import VisionMission from '../../components/VisionMission.astro';
+import CoreActivities from '../../components/CoreActivities.astro';
+import Values from '../../components/Values.astro';
+import CTA from '../../components/CTA.astro';
+import { useTranslations } from '../../i18n';
+import { client } from '../../data/client';
+
+const t = useTranslations('ar');
+---
+
+<BaseLayout
+  title={t.meta.homeTitle}
+  description={t.meta.homeDescription}
+  lang="ar"
+  schema={{
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: client.nameAr,
+    email: client.email,
+    telephone: client.phoneForTel,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: client.address.cityAr,
+      addressCountry: client.address.countryAr,
+    },
+    url: client.domain,
+  }}
+>
+  <Header slot="header" />
+
+  <HeroSection />
+  <AboutSection />
+  <VisionMission />
+  <CoreActivities />
+  <Values />
+  <CTA />
+
+  <Footer slot="footer" />
+</BaseLayout>

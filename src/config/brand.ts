@@ -14,11 +14,15 @@
 
 export const brand = {
   // ── Site Identity ──────────────────────────────────────────────────────────
-  name: 'Small Business Starter',
-  tagline: 'Professional service you can trust.',
+  name: 'SAS Huqooqi',
+  nameAr: 'مركز ساس الحقوقي',
+  tagline: 'For Legal Training',
+  taglineAr: 'للتدريب القانوني',
   description:
-    'A fast, mobile-first small-business website template built with Astro 6 and Tailwind v4. Fully customisable for any trade or service business.',
-  url: 'https://example.com',
+    'SAS Huqooqi for Legal Training Center is dedicated to strengthening the rule of law, promoting human rights and good governance, and enhancing access to justice in Sudan.',
+  descriptionAr:
+    'مركز ساس الحقوقي للتدريب القانوني مكرس لتعزيز سيادة القانون وتعزيز حقوق الإنسان والحكم الرشيد وتحسين الوصول إلى العدالة في السودان.',
+  url: 'https://sashuqooqi.org',
   locale: 'en_US',
 
   // ── Fonts ──────────────────────────────────────────────────────────────────
@@ -26,29 +30,32 @@ export const brand = {
   // to match (both must stay in sync so Astro can optimise the correct files).
   fonts: {
     body: 'Inter',
-    display: 'Oswald',
+    bodyAr: 'Cairo',
+    display: 'Playfair Display',
+    displayAr: 'Cairo',
   },
 
   // ── Colour Palette ─────────────────────────────────────────────────────────
+  // Gold/brown theme based on SAS Huqooqi logo
   // These values are written to CSS custom properties in theme.css.
   // Tailwind v4 @theme picks them up automatically.
   colors: {
-    primary:      '#1B3A6B',
-    primaryLight: '#2563EB',
+    primary:      '#8B6914',
+    primaryLight: '#A67C00',
     primaryFg:    '#ffffff',
 
-    accent:       '#F97316',
+    accent:       '#5C4A0E',
     accentFg:     '#ffffff',
 
-    background:   '#ffffff',
-    surface:      '#F8FAFC',
-    border:       '#E2E8F0',
+    background:   '#FFFDF8',
+    surface:      '#FBF7EF',
+    border:       '#E8DFC8',
 
-    text:         '#0F172A',
-    textMuted:    '#475569',
+    text:         '#1F1A0F',
+    textMuted:    '#6B5D45',
 
-    dark:         '#0F172A',
-    darkSurface:  '#1E293B',
+    dark:         '#1F1A0F',
+    darkSurface:  '#2D2618',
   },
 
   // ── Border radius ──────────────────────────────────────────────────────────

@@ -1,0 +1,42 @@
+---
+/**
+ * Contact Success Page (Arabic)
+ * صفحة نجاح الإرسال
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { useTranslations } from '../../../i18n';
+
+const t = useTranslations('ar');
+---
+
+<BaseLayout
+  title="تم إرسال الرسالة - مركز ساس الحقوقي"
+  description="شكراً لتواصلك مع مركز ساس الحقوقي للتدريب القانوني."
+  lang="ar"
+>
+  <Header slot="header" />
+
+  <section class="flex min-h-[60vh] items-center justify-center py-section">
+    <div class="mx-auto max-w-lg px-4 text-center sm:px-6">
+      <div class="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-green-100 text-green-600">
+        <svg class="size-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h1 class="font-arabic text-h2 font-bold text-text">شكراً لك!</h1>
+      <p class="mt-4 text-text-muted leading-relaxed">
+        {t.contact.formSuccess}
+      </p>
+      <a
+        href="/ar/"
+        class="mt-8 inline-flex min-h-[44px] items-center justify-center rounded-md bg-primary px-6 py-3 text-base font-bold text-primary-fg shadow-sm transition-opacity hover:opacity-90"
+      >
+        {t.common.backToHome}
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

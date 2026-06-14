@@ -1,0 +1,9 @@
+# Cloudflare Pages Redirects
+# https://developers.cloudflare.com/pages/platform/redirects
+
+# Redirect root to English
+/ /en/ 302
+
+# Handle trailing slashes consistently
+/en /en/ 301
+/ar /ar/ 301

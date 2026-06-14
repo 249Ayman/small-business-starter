@@ -1,0 +1,41 @@
+---
+/**
+ * AnimateOnScroll Component
+ * Wrapper component that animates children when they enter the viewport
+ */
+interface Props {
+  class?: string;
+  tag?: 'div' | 'ul' | 'section';
+  animation?: 'fade-up' | 'fade-in' | 'fade-left' | 'fade-right' | 'scale' | 'hero';
+  delay?: number;
+  threshold?: number;
+  stagger?: boolean;
+}
+
+const {
+  class: className = '',
+  tag: Tag = 'div',
+  animation = 'fade-up',
+  delay = 0,
+  threshold = 0.1,
+  stagger = false,
+} = Astro.props;
+
+const animationClass = {
+  'fade-up': 'animate-on-scroll',
+  'fade-in': 'animate-on-scroll animate-fade-in',
+  'fade-left': 'animate-on-scroll animate-fade-left',
+  'fade-right': 'animate-on-scroll animate-fade-right',
+  'scale': 'animate-on-scroll animate-scale',
+  'hero': 'animate-hero',
+}[animation];
+---
+
+<Tag
+  class:list={[animationClass, stagger && 'stagger-children', className]}
+  data-animate
+  data-threshold={threshold}
+  style={delay ? `animation-delay: ${delay}ms` : undefined}
+>
+  <slot />
+</Tag>
