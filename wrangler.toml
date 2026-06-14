@@ -1,7 +1,7 @@
 # Cloudflare Pages / Workers static site configuration
 # https://developers.cloudflare.com/pages/configuration/wrangler-configuration/
 
-name = "sas-huqooqi"
+name = "small-business-starter"
 compatibility_date = "2024-01-01"
 
 # Cloudflare Pages: output directory after `pnpm run build`
